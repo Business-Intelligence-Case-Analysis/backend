@@ -1,21 +1,16 @@
 package com.example.businessintelligence.entity.node;
 
-import com.example.businessintelligence.entity.relation.HasInterest;
-import com.example.businessintelligence.entity.relation.Publish;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Relationship;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
 
-import java.util.List;
+
 
 @Builder
 @Data
-@Node("VENUE")
+@NodeEntity(label = "VENUE")
 public class Venue {
     @Id
     private String venueId;
-    @Relationship(type = "PUBLISH", direction = Relationship.Direction.OUTGOING)
-    private List<Publish> publishList;
 }

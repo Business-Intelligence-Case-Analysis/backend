@@ -8,6 +8,7 @@ class BusinessIntelligenceApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

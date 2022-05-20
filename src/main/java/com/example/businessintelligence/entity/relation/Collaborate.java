@@ -1,17 +1,18 @@
 package com.example.businessintelligence.entity.relation;
 
 import com.example.businessintelligence.entity.node.Author;
-import org.springframework.data.neo4j.core.schema.Property;
-import org.springframework.data.neo4j.core.schema.RelationshipId;
-import org.springframework.data.neo4j.core.schema.RelationshipProperties;
-import org.springframework.data.neo4j.core.schema.TargetNode;
+import org.neo4j.ogm.annotation.*;
 
-@RelationshipProperties
+
+@RelationshipEntity(type = "COLLABORATE")
 public class Collaborate {
-    @RelationshipId
+    @Id
+    @GeneratedValue
     private Long id;
-    @TargetNode
-    private Author collaborateAuthor;
+    @StartNode
+    private Author author1;
+    @EndNode
+    private Author author2;
     @Property("number")
     private int number;
 }

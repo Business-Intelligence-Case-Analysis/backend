@@ -1,14 +1,17 @@
 package com.example.businessintelligence.entity.relation;
 
 import com.example.businessintelligence.entity.node.Affiliation;
-import org.springframework.data.neo4j.core.schema.RelationshipId;
-import org.springframework.data.neo4j.core.schema.RelationshipProperties;
-import org.springframework.data.neo4j.core.schema.TargetNode;
+import com.example.businessintelligence.entity.node.Author;
+import org.neo4j.ogm.annotation.*;
 
-@RelationshipProperties
+
+@RelationshipEntity(type = "IN")
 public class In {
-    @RelationshipId
+    @Id
+    @GeneratedValue
     private Long id;
-    @TargetNode
+    @StartNode
+    private Author author;
+    @EndNode
     private Affiliation affiliation;
 }

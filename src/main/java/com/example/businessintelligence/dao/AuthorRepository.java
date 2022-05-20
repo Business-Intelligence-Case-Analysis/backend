@@ -1,7 +1,13 @@
 package com.example.businessintelligence.dao;
 
 import com.example.businessintelligence.entity.node.Author;
-import org.springframework.data.neo4j.repository.ReactiveNeo4jRepository;
+import com.example.businessintelligence.entity.node.Paper;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
+import org.springframework.stereotype.Repository;
 
-public interface AuthorRepository extends ReactiveNeo4jRepository<Author, Integer> {
+import java.util.List;
+@Repository
+public interface AuthorRepository extends Neo4jRepository<Author, Integer> {
+
+
 }

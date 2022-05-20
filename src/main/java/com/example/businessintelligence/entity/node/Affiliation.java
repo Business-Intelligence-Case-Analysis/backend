@@ -2,12 +2,13 @@ package com.example.businessintelligence.entity.node;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
+
 
 @Builder
 @Data
-@Node("AFFILIATION")
+@NodeEntity(label = "AFFILIATION")
 public class Affiliation {
     @Id
     private String affiliationId;
