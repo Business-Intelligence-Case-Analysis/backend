@@ -17,8 +17,20 @@ public class HomeController {
     @Resource
     Functional functional;
 
-    @GetMapping("/")
+    @GetMapping("/1")
     public ApiResult getPapers(@RequestParam("authorId") int authorId) {
         return ApiResultHandler.buildApiResult(200,"",functional.getPapersWrittenByAuthor(String.valueOf(authorId)));
+    }
+    @GetMapping("/2")
+    public ApiResult getCollaborateAuthors(@RequestParam("authorId") int authorId) {
+        return ApiResultHandler.buildApiResult(200,"",functional.getAuthorCollaboratedWithAuthor(String.valueOf(authorId)));
+    }
+    @GetMapping("/3")
+    public ApiResult getVenuesPublishPaper(@RequestParam("paperId") int paperId) {
+        return ApiResultHandler.buildApiResult(200,"",functional.getVenuesPublishPaper(String.valueOf(paperId)));
+    }
+    @GetMapping("/4")
+    public ApiResult getAuthorsInSameAffiliation(@RequestParam("authorId") int authorId) {
+        return ApiResultHandler.buildApiResult(200,"",functional.getAuthorsInSameAffiliation(String.valueOf(authorId)));
     }
 }
