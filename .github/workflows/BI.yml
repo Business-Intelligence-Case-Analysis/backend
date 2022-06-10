@@ -49,7 +49,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: | # 命令中的 & 表示在后台运行进程w
-            cd bi/backend
+            cd ~/bi/backend/target
             ls
             lsof -i:8081 | grep -A 1 'PID' | sed -n '2p' | awk '{print $2}' | xargs kill -9
             java -jar BusinessIntelligence-0.0.1-SNAPSHOT.jar &
