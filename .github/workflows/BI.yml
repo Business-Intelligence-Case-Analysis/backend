@@ -37,8 +37,8 @@ jobs:
       - name: 将 JAR 包部署到服务器
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: bi/backend/target/
-          remote: bi/backend/
+          local: target/
+          remote: bi/backend/target
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
