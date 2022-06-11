@@ -100,6 +100,7 @@ public class Functional {
             }
             PaperDTO paperDTO = new PaperDTO();
             paperDTO.setPaperAndAuthor(p, authorDTOList);
+            paperDTOList.add(paperDTO);
         }
         authorAndPaperDTO.setAuthor(searchAuthorDTO);
         authorAndPaperDTO.setPapers(paperDTOList);

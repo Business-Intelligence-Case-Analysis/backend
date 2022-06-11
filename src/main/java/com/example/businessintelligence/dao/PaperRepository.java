@@ -19,7 +19,7 @@ public interface PaperRepository extends Neo4jRepository<Paper, Integer> {
     @Query("match (a:AUTHOR{authorId:$authorId}) -[:WRITE]-> (p:PAPER) return p")
     List<Paper> findPapersWrittenByAuthorId(String authorId);
     //查询作者引用过哪些文章
-    @Query("match (a:AUTHOR{authorId:$authorId}) -[:WRITE]-> (p:PAPER) -[:REFERENCE]-> (p1:PAPER) return p1")
+    @Query("match (a:AUTHOR{authorId:$authorId}) -[:WRITE]-> (p:PAPER) -[:REFERENCE]- (p1:PAPER) return p1")
     List<Paper> findPapersCitedByAuthor(String authorId);
     //某年某刊物发表的全部文章（统计数量等）
     @Query("match (v:VENUE{venueId:$venueId}) -[:PUBLISH]-> (p:PAPER) where p.year=$year return p")

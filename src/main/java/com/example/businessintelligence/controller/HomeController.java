@@ -52,7 +52,7 @@ public class HomeController {
         return ApiResultHandler.success(collaborateDTO);
     }
 
-    @PostMapping("/getPapersAndAuthorsCitedByAuthor")
+        @PostMapping("/getPapersAndAuthorsCitedByAuthor")
     public ApiResult getPapersAndAuthorsCitedByAuthor(@RequestBody JSONObject jsonObject) {
         String authorId = jsonObject.getInteger("authorId").toString();
         AuthorAndPaperDTO authorAndPaperDTO = functional.getPapersCitedByAuthor(authorId);
