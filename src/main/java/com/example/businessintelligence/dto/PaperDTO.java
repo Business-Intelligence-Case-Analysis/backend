@@ -20,13 +20,24 @@ public class PaperDTO {
 
     List<PeriodicalDTO> periodical;
 
-    public PaperDTO(Paper paper, List<PeriodicalDTO> periodicalDTOList) {
+    List<AuthorDTO> author;
+
+    public void setPaperAndPeriodical(Paper paper, List<PeriodicalDTO> periodicalDTOList) {
         this.id = Integer.parseInt(paper.getPaperId());
         this.title = paper.getTitle();
         this.year = paper.getYear();
         this.Abstract = paper.getAbstract();
         this.label = "paper";
         this.periodical = periodicalDTOList;
+    }
+
+    public void setPaperAndAuthor(Paper paper, List<AuthorDTO> authorDTOList) {
+        this.id = Integer.parseInt(paper.getPaperId());
+        this.title = paper.getTitle();
+        this.year = paper.getYear();
+        this.Abstract = paper.getAbstract();
+        this.label = "paper";
+        this.author = authorDTOList;
     }
 
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class WriteDTO {
+public class AuthorAndPaperDTO {
     private AuthorDTO author;
     private List<PaperDTO> papers;
 
