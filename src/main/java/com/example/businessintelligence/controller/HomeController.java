@@ -98,6 +98,16 @@ public class HomeController {
         return ApiResultHandler.success(functional.getPapersInVenueIsCitedTimes(venue));
     }
 
+    @PostMapping("/getAuthorsInAffiliation")
+    public ApiResult getAuthorsInAffiliation(@RequestBody JSONObject jsonObject) {
+        String affiliation = jsonObject.getString("affiliation");
+        List<AuthorDTO> authorDTOList = functional.findAuthorsInAffiliation(affiliation);
+        if(authorDTOList.size() == 0) {
+            return ApiResultHandler.empty();
+        }
+        return ApiResultHandler.success(authorDTOList);
+    }
+
     @GetMapping("/3")
     public ApiResult getVenuesPublishPaper(@RequestParam("paperId") int paperId) {
         return ApiResultHandler.buildApiResult(200,"",functional.getVenuesPublishPaper(String.valueOf(paperId)));

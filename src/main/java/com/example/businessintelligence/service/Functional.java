@@ -171,6 +171,16 @@ public class Functional {
         return venueRepository.getPapersInVenueIsCitedTimes(venueId);
     }
 
+    public List<AuthorDTO> findAuthorsInAffiliation(String affiliationId) {
+        List<Author> authors = authorRepository.findAuthorByAffiliation(affiliationId);
+        List<AuthorDTO> authorDTOList = new ArrayList<>();
+        for(Author au : authors) {
+            authorDTOList.add(new AuthorDTO(au));
+        }
+        return authorDTOList;
+    }
+
+
 
 
 }
