@@ -15,15 +15,15 @@ public class ApiResult {
     /**
      * 返回的结果包装在value中，value可以是单个对象
      */
-    private Object data;
+    private Object value;
 
     public ApiResult() {
     }
 
-    public ApiResult(int code, String message, Object data) {
+    public ApiResult(int code, String message, Object value) {
         this.code = code;
         this.message = message;
-        this.data = data;
+        this.value = value;
     }
 
     public int getCode() {
@@ -42,11 +42,11 @@ public class ApiResult {
         this.message = message;
     }
 
-    public Object getData() {
-        return data;
+    public Object getValue() {
+        return value;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setValue(Object value) {
+        this.value = value;
     }
 }

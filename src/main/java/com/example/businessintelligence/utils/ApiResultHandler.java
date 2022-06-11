@@ -7,24 +7,20 @@ public class ApiResultHandler {
         return success(null);
     }
 
-    public static ApiResult success(Object object) {
-        ApiResult apiResult = new ApiResult();
-        apiResult.setData(object);
-        apiResult.setCode(200);
-        apiResult.setMessage("请求成功");
-        return apiResult;
+    public static ApiResult success(Object object) {return new ApiResult(200,"请求成功",object);}
+
+    public static ApiResult fail(){
+        return new ApiResult(-1,"请求失败",null);
     }
 
-    public static ApiResult fail(String message){
-        return new ApiResult(0,message,null);
-    }
+    public static ApiResult empty() {return new ApiResult(204,"空对象",null);}
 
-    public static ApiResult buildApiResult(Integer code, String message, Object data) {
+    public static ApiResult buildApiResult(Integer code, String message, Object value) {
         ApiResult apiResult = new ApiResult();
 
         apiResult.setCode(code);
         apiResult.setMessage(message);
-        apiResult.setData(data);
+        apiResult.setValue(value);
         return apiResult;
     }
 }
