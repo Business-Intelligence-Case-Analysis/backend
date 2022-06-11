@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class Functional {
@@ -131,7 +132,8 @@ public class Functional {
             List<Author> authors = authorRepository.findAuthorByAffiliation(aff.getAffiliationId());
             List<AuthorDTO> authorDTOList = new ArrayList<>();
             for(Author au : authors) {
-                authorDTOList.add(new AuthorDTO(au));
+                if(!Objects.equals(au.getAuthorId(), authorId))
+                    authorDTOList.add(new AuthorDTO(au));
             }
             AffiliationDTO affiliationDTO = new AffiliationDTO();
             affiliationDTO.setAffiliationAndAuthors(aff, authorDTOList);

@@ -7,7 +7,6 @@ import java.util.List;
 
 @Data
 public class AffiliationDTO {
-    int id;
 
     String name;
 
@@ -16,7 +15,6 @@ public class AffiliationDTO {
     List<AuthorDTO> authorDTOList;
 
     public void setAffiliationAndAuthors(Affiliation affiliation, List<AuthorDTO> authorDTOList) {
-        this.id = 0;
         this.name = affiliation.getAffiliationId();
         this.label = "affiliation";
         this.authorDTOList = authorDTOList;

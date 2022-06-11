@@ -108,9 +108,6 @@ public class HomeController {
         return ApiResultHandler.success(authorDTOList);
     }
 
-    @GetMapping("/3")
-    public ApiResult getVenuesPublishPaper(@RequestParam("paperId") int paperId) {
-        return ApiResultHandler.buildApiResult(200,"",functional.getVenuesPublishPaper(String.valueOf(paperId)));
-    }
+
 
 }
