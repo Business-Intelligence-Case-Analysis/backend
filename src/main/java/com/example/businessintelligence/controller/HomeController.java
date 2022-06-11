@@ -10,7 +10,6 @@ import com.example.businessintelligence.entity.node.Author;
 import com.example.businessintelligence.service.Functional;
 import com.example.businessintelligence.utils.ApiResultHandler;
 
-import netscape.javascript.JSObject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
