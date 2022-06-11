@@ -2,6 +2,7 @@ package com.example.businessintelligence.controller;
 
 
 import com.example.businessintelligence.dto.CollaborateDTO;
+import com.example.businessintelligence.dto.WriteDTO;
 import com.example.businessintelligence.entity.logicalEntity.ApiResult;
 
 import com.example.businessintelligence.service.Functional;
@@ -20,9 +21,13 @@ public class HomeController {
     @Resource
     Functional functional;
 
-    @GetMapping("/1")
-    public ApiResult getPapers(@RequestParam("authorId") int authorId) {
-        return ApiResultHandler.buildApiResult(200,"",functional.getPapersWrittenByAuthor(String.valueOf(authorId)));
+    @GetMapping("/getPapersAndVenues")
+    public ApiResult getPapersAndVenues(@RequestParam("author") String authorName) {
+        WriteDTO writeDTO = functional.getPapersWrittenByAuthor(authorName);
+        if(writeDTO == null) {
+            return ApiResultHandler.empty();
+        }
+        return ApiResultHandler.success(writeDTO);
     }
     @GetMapping("/getCollaborateAuthors")
     public ApiResult getCollaborateAuthors(@RequestParam("author") String authorName) {

@@ -3,8 +3,7 @@ package com.example.businessintelligence.service;
 import com.example.businessintelligence.dao.AuthorRepository;
 import com.example.businessintelligence.dao.PaperRepository;
 import com.example.businessintelligence.dao.VenueRepository;
-import com.example.businessintelligence.dto.AuthorDTO;
-import com.example.businessintelligence.dto.CollaborateDTO;
+import com.example.businessintelligence.dto.*;
 import com.example.businessintelligence.entity.node.Author;
 import com.example.businessintelligence.entity.node.Paper;
 import com.example.businessintelligence.entity.node.Venue;
@@ -24,8 +23,33 @@ public class Functional {
     VenueRepository venueRepository;
 
 
-    public List<Paper> getPapersWrittenByAuthor(String authorId) {
-        return paperRepository.findPapersWrittenByAuthor(authorId);
+    public WriteDTO getPapersWrittenByAuthor(String authorName) {
+
+        Author searchAuthor = authorRepository.findAuthorByName(authorName);
+        if(searchAuthor == null) {
+            System.out.println("search author is null");
+            return null;
+        }
+        AuthorDTO searchAuthorDTO = new AuthorDTO(searchAuthor);
+
+        WriteDTO writeDTO = new WriteDTO();
+        List<Paper> papers = paperRepository.findPapersWrittenByAuthorName(authorName);
+        List<PaperDTO> paperDTOList = new ArrayList<>();
+        for(Paper p : papers) {
+
+            List<Venue> venues = venueRepository.findVenuesPublishPaper(p.getPaperId());
+            List<PeriodicalDTO> periodicalDTOList = new ArrayList<>();
+            for(Venue v : venues) {
+                periodicalDTOList.add(new PeriodicalDTO(v));
+            }
+            PaperDTO paperDTO = new PaperDTO(p, periodicalDTOList);
+            paperDTOList.add(paperDTO);
+
+        }
+        writeDTO.setAuthor(searchAuthorDTO);
+        writeDTO.setPapers(paperDTOList);
+        return writeDTO;
+
     }
     public CollaborateDTO getAuthorCollaboratedWithAuthor(String authorName) {
 

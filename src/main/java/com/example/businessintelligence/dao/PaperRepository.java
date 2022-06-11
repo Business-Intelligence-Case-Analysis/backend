@@ -10,9 +10,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface PaperRepository extends Neo4jRepository<Paper, Integer> {
-    //查询作者写过哪些文章
+
+    //根据名字查询作者写过哪些文章
+    @Query("match (a:AUTHOR{name:$authorName}) -[:WRITE]-> (p:PAPER) return p")
+    List<Paper> findPapersWrittenByAuthorName(String authorName);
+
+    //根据id查询作者写过哪些文章
     @Query("match (a:AUTHOR{authorId:$authorId}) -[:WRITE]-> (p:PAPER) return p")
-    List<Paper> findPapersWrittenByAuthor(String authorId);
+    List<Paper> findPapersWrittenByAuthorId(String authorId);
     //查询作者引用过哪些文章
     @Query("match (a:AUTHOR{authorId:$authorId}) -[:WRITE]-> (p:PAPER) -[:REFERENCE]-> (p1:PAPER) return p1")
     List<Paper> findPapersCitedByAuthor(String authorId);
