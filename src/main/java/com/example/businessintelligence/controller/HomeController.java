@@ -108,6 +108,16 @@ public class HomeController {
         return ApiResultHandler.success(authorDTOList);
     }
 
+    @PostMapping("/getAuthorsBySameInterest")
+    public ApiResult getAuthorsBySameInterest(@RequestBody JSONObject jsonObject) {
+        String interest = jsonObject.getString("interest");
+        List<AuthorDTO> authorDTOList = functional.findAuthorsByInterest(interest);
+        if(authorDTOList.size() == 0) {
+            return ApiResultHandler.empty();
+        }
+        return ApiResultHandler.success(authorDTOList);
+    }
+
 
 
 }

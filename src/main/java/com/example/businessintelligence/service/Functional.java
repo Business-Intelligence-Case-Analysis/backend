@@ -182,6 +182,14 @@ public class Functional {
         return authorDTOList;
     }
 
+    public List<AuthorDTO> findAuthorsByInterest(String interest) {
+        List<Author> authors = authorRepository.findAuthorsByInterest(interest);
+        List<AuthorDTO> authorDTOList = new ArrayList<>();
+        for(Author au : authors) {
+            authorDTOList.add(new AuthorDTO(au));
+        }
+        return authorDTOList;
+    }
 
 
 
