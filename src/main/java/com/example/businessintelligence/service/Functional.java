@@ -1,9 +1,11 @@
 package com.example.businessintelligence.service;
 
+import com.example.businessintelligence.dao.AffiliationRepository;
 import com.example.businessintelligence.dao.AuthorRepository;
 import com.example.businessintelligence.dao.PaperRepository;
 import com.example.businessintelligence.dao.VenueRepository;
 import com.example.businessintelligence.dto.*;
+import com.example.businessintelligence.entity.node.Affiliation;
 import com.example.businessintelligence.entity.node.Author;
 import com.example.businessintelligence.entity.node.Paper;
 import com.example.businessintelligence.entity.node.Venue;
@@ -21,6 +23,8 @@ public class Functional {
     AuthorRepository authorRepository;
     @Resource
     VenueRepository venueRepository;
+    @Resource
+    AffiliationRepository affiliationRepository;
 
     public List<Author> getAuthorsByName(String authorName) {
         return authorRepository.findAuthorByName(authorName);
@@ -55,7 +59,7 @@ public class Functional {
         return authorAndPaperDTO;
 
     }
-    public CollaborateDTO getAuthorCollaboratedWithAuthor(String authorId) {
+    public AuthorAndCollaboratorDTO getAuthorCollaboratedWithAuthor(String authorId) {
 
         Author searchAuthor = authorRepository.findAuthorByAuthorId(authorId);
         if(searchAuthor == null) {
@@ -68,17 +72,17 @@ public class Functional {
         List<Author> authors = authorRepository.findCollaborateAuthorById(authorId);
         List<AuthorDTO> authorDTOs = new ArrayList<>();
 
-        CollaborateDTO collaborateDTO = new CollaborateDTO();
-        collaborateDTO.setAuthor(searchAuthorDTO);
+        AuthorAndCollaboratorDTO authorAndCollaboratorDTO = new AuthorAndCollaboratorDTO();
+        authorAndCollaboratorDTO.setAuthor(searchAuthorDTO);
         for(Author au : authors) {
             AuthorDTO authorDTO = new AuthorDTO(au);
             authorDTOs.add(authorDTO);
         }
 
-        collaborateDTO.setAuthor(searchAuthorDTO);
-        collaborateDTO.setCollaborators(authorDTOs);
+        authorAndCollaboratorDTO.setAuthor(searchAuthorDTO);
+        authorAndCollaboratorDTO.setCollaborators(authorDTOs);
 
-        return collaborateDTO;
+        return authorAndCollaboratorDTO;
     }
 
     public AuthorAndPaperDTO getPapersCitedByAuthor(String authorId) {
@@ -110,9 +114,20 @@ public class Functional {
     public List<Venue> getVenuesPublishPaper(String paperId) {
         return venueRepository.findVenuesPublishPaper(paperId);
     }
-    public List<Author> getAuthorsInSameAffiliation(String authorId) {
-        return authorRepository.findAuthorsInSameAffiliation(authorId);
-    }
+//    public AuthorAndAffiliationDTO getAuthorsInSameAffiliation(String authorId) {
+//        Author searchAuthor = authorRepository.findAuthorByAuthorId(authorId);
+//        if(searchAuthor == null) {
+//            System.out.println("search author is null");
+//            return null;
+//        }
+//        AuthorDTO searchAuthorDTO = new AuthorDTO(searchAuthor);
+//
+//        List<Affiliation> affiliationList = affiliationRepository.findAffiliationsByAuthorId(authorId);
+//        for(Affiliation aff : affiliationList) {
+//
+//        }
+//
+//    }
 
 
 }

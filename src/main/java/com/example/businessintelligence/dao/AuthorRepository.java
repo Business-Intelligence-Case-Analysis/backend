@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface AuthorRepository extends Neo4jRepository<Author, Integer> {
 
+    //根据id找作者
     Author findAuthorByAuthorId(String id);
 
     //根据名字查询作者节点（可能同名）
@@ -35,5 +36,9 @@ public interface AuthorRepository extends Neo4jRepository<Author, Integer> {
     //哪些作者在某期刊上发表过文章
     @Query("match (v:VENUE{venueId:$venueId}) -[:PUBLISH]-> (p:PAPER) <-[:WRITE]- (a:AUTHOR) return a")
     List<Author> findAuthorsByVenue(String venueId);
+
+    //查询某机构下的所有作者
+    @Query("match (a:AUTHOR) -[:IN]-> (aff:AFFILIATION{affiliationId:$affiliationId}) return a")
+    List<Author> findAuthorByAffiliation(String affiliationId);
 
 }

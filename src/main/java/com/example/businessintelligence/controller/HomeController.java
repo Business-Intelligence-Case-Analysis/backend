@@ -2,7 +2,7 @@ package com.example.businessintelligence.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.businessintelligence.dto.CollaborateDTO;
+import com.example.businessintelligence.dto.AuthorAndCollaboratorDTO;
 import com.example.businessintelligence.dto.AuthorAndPaperDTO;
 import com.example.businessintelligence.entity.logicalEntity.ApiResult;
 
@@ -23,7 +23,7 @@ public class HomeController {
 
     @PostMapping("/getAuthorsByName")
     public ApiResult getAuthorsByName(@RequestBody JSONObject jsonObject) {
-        String name = jsonObject.getInteger("author").toString();
+        String name = jsonObject.getString("author");
         List<Author> authorList = functional.getAuthorsByName(name);
         if(authorList.size() == 0) {
             return ApiResultHandler.empty();
@@ -45,11 +45,11 @@ public class HomeController {
     @PostMapping("/getCollaborateAuthors")
     public ApiResult getCollaborateAuthors(@RequestBody JSONObject jsonObject) {
         String authorId = jsonObject.getInteger("authorId").toString();
-        CollaborateDTO collaborateDTO = functional.getAuthorCollaboratedWithAuthor(authorId);
-        if(collaborateDTO == null) {
+        AuthorAndCollaboratorDTO authorAndCollaboratorDTO = functional.getAuthorCollaboratedWithAuthor(authorId);
+        if(authorAndCollaboratorDTO == null) {
             return ApiResultHandler.empty();
         }
-        return ApiResultHandler.success(collaborateDTO);
+        return ApiResultHandler.success(authorAndCollaboratorDTO);
     }
 
         @PostMapping("/getPapersAndAuthorsCitedByAuthor")
@@ -66,8 +66,8 @@ public class HomeController {
     public ApiResult getVenuesPublishPaper(@RequestParam("paperId") int paperId) {
         return ApiResultHandler.buildApiResult(200,"",functional.getVenuesPublishPaper(String.valueOf(paperId)));
     }
-    @GetMapping("/4")
-    public ApiResult getAuthorsInSameAffiliation(@RequestParam("authorId") int authorId) {
-        return ApiResultHandler.buildApiResult(200,"",functional.getAuthorsInSameAffiliation(String.valueOf(authorId)));
-    }
+//    @GetMapping("/4")
+//    public ApiResult getAuthorsInSameAffiliation(@RequestParam("authorId") int authorId) {
+//        return ApiResultHandler.buildApiResult(200,"",functional.getAuthorsInSameAffiliation(String.valueOf(authorId)));
+//    }
 }
