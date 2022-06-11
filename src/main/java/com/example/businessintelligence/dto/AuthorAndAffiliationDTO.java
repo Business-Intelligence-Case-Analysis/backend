@@ -3,11 +3,13 @@ package com.example.businessintelligence.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class AuthorAndAffiliationDTO {
 
-    private AuthorDTO authorDTO;
+    private AuthorDTO author;
 
-    private AffiliationDTO affiliationDTO;
+    private List<AffiliationDTO> affiliation;
 
 }

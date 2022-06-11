@@ -2,6 +2,7 @@ package com.example.businessintelligence.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.businessintelligence.dto.AuthorAndAffiliationDTO;
 import com.example.businessintelligence.dto.AuthorAndCollaboratorDTO;
 import com.example.businessintelligence.dto.AuthorAndPaperDTO;
 import com.example.businessintelligence.entity.logicalEntity.ApiResult;
@@ -62,12 +63,19 @@ public class HomeController {
         return ApiResultHandler.success(authorAndPaperDTO);
     }
 
+    @PostMapping("/getAuthorsInSameAffiliation")
+    public ApiResult getAuthorsInSameAffiliation(@RequestBody JSONObject jsonObject) {
+        String authorId = jsonObject.getInteger("authorId").toString();
+        AuthorAndAffiliationDTO authorAndAffiliationDTO = functional.getAuthorsInSameAffiliation(authorId);
+        if(authorAndAffiliationDTO == null) {
+            return ApiResultHandler.empty();
+        }
+        return ApiResultHandler.success(authorAndAffiliationDTO);
+    }
+
     @GetMapping("/3")
     public ApiResult getVenuesPublishPaper(@RequestParam("paperId") int paperId) {
         return ApiResultHandler.buildApiResult(200,"",functional.getVenuesPublishPaper(String.valueOf(paperId)));
     }
-//    @GetMapping("/4")
-//    public ApiResult getAuthorsInSameAffiliation(@RequestParam("authorId") int authorId) {
-//        return ApiResultHandler.buildApiResult(200,"",functional.getAuthorsInSameAffiliation(String.valueOf(authorId)));
-//    }
+
 }

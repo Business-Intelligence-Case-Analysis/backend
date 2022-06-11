@@ -114,20 +114,33 @@ public class Functional {
     public List<Venue> getVenuesPublishPaper(String paperId) {
         return venueRepository.findVenuesPublishPaper(paperId);
     }
-//    public AuthorAndAffiliationDTO getAuthorsInSameAffiliation(String authorId) {
-//        Author searchAuthor = authorRepository.findAuthorByAuthorId(authorId);
-//        if(searchAuthor == null) {
-//            System.out.println("search author is null");
-//            return null;
-//        }
-//        AuthorDTO searchAuthorDTO = new AuthorDTO(searchAuthor);
-//
-//        List<Affiliation> affiliationList = affiliationRepository.findAffiliationsByAuthorId(authorId);
-//        for(Affiliation aff : affiliationList) {
-//
-//        }
-//
-//    }
+
+    public AuthorAndAffiliationDTO getAuthorsInSameAffiliation(String authorId) {
+        Author searchAuthor = authorRepository.findAuthorByAuthorId(authorId);
+        if(searchAuthor == null) {
+            System.out.println("search author is null");
+            return null;
+        }
+        AuthorDTO searchAuthorDTO = new AuthorDTO(searchAuthor);
+
+        List<Affiliation> affiliationList = affiliationRepository.findAffiliationsByAuthorId(authorId);
+        AuthorAndAffiliationDTO authorAndAffiliationDTO = new AuthorAndAffiliationDTO();
+        List<AffiliationDTO> affiliationDTOList = new ArrayList<>();
+        for(Affiliation aff : affiliationList) {
+            List<Author> authors = authorRepository.findAuthorByAffiliation(aff.getAffiliationId());
+            List<AuthorDTO> authorDTOList = new ArrayList<>();
+            for(Author au : authors) {
+                authorDTOList.add(new AuthorDTO(au));
+            }
+            AffiliationDTO affiliationDTO = new AffiliationDTO();
+            affiliationDTO.setAffiliationAndAuthors(aff, authorDTOList);
+            affiliationDTOList.add(affiliationDTO);
+        }
+        authorAndAffiliationDTO.setAuthor(searchAuthorDTO);
+        authorAndAffiliationDTO.setAffiliation(affiliationDTOList);
+
+        return authorAndAffiliationDTO;
+    }
 
 
 }
