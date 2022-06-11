@@ -26,4 +26,8 @@ public interface PaperRepository extends Neo4jRepository<Paper, Integer> {
     //某年某刊物发表的全部文章（统计数量等）
     @Query("match (v:VENUE{venueId:$venueId}) -[:PUBLISH]-> (p:PAPER) where p.year=$year return p")
     List<Paper> findPapersPublishedByVenueAndYear(String venueId, String year);
+
+    //计算该文章的被引用次数
+    @Query("match (p:PAPER{paperId:$paperId}) <-[:REFERENCE]- (p1:PAPER) return count(distinct p1)")
+    int getPaperIdCitedTimes(String paperId);
 }

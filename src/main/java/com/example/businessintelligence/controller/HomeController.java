@@ -2,10 +2,7 @@ package com.example.businessintelligence.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.businessintelligence.dto.AuthorAndAffiliationDTO;
-import com.example.businessintelligence.dto.AuthorAndCollaboratorDTO;
-import com.example.businessintelligence.dto.AuthorAndPaperDTO;
-import com.example.businessintelligence.dto.PaperDTO;
+import com.example.businessintelligence.dto.*;
 import com.example.businessintelligence.entity.logicalEntity.ApiResult;
 
 import com.example.businessintelligence.entity.node.Author;
@@ -85,6 +82,21 @@ public class HomeController {
 
     }
 
+    @PostMapping("/getAuthorsByVenue")
+    public ApiResult getAuthorsByVenue(@RequestBody JSONObject jsonObject) {
+        String venue = jsonObject.getString("venue");
+        List<AuthorDTO> authorDTOList = functional.getAuthorsByVenue(venue);
+        if(authorDTOList.size() == 0) {
+            return ApiResultHandler.empty();
+        }
+        return ApiResultHandler.success(authorDTOList);
+    }
+
+    @PostMapping("/getPaperInVenueIsCitedTimes")
+    public ApiResult getPaperInVenueIsCitedTimes(@RequestBody JSONObject jsonObject) {
+        String venue = jsonObject.getString("venue");
+        return ApiResultHandler.success(functional.getPapersInVenueIsCitedTimes(venue));
+    }
 
     @GetMapping("/3")
     public ApiResult getVenuesPublishPaper(@RequestParam("paperId") int paperId) {

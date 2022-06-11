@@ -1,5 +1,6 @@
 package com.example.businessintelligence.service;
 
+import com.alibaba.fastjson2.JSONReader;
 import com.example.businessintelligence.dao.AffiliationRepository;
 import com.example.businessintelligence.dao.AuthorRepository;
 import com.example.businessintelligence.dao.PaperRepository;
@@ -151,6 +152,23 @@ public class Functional {
             paperDTOList.add(paperDTO);
         }
         return paperDTOList;
+    }
+
+    public List<AuthorDTO> getAuthorsByVenue(String venue) {
+        List<Author> authors = authorRepository.findAuthorsByVenue(venue);
+        List<AuthorDTO> authorDTOList = new ArrayList<>();
+        for(Author au : authors) {
+            authorDTOList.add(new AuthorDTO(au));
+        }
+        return authorDTOList;
+    }
+
+    public int getPaperIsCitedTimes(String paperId) {
+        return paperRepository.getPaperIdCitedTimes(paperId);
+    }
+
+    public int getPapersInVenueIsCitedTimes(String venueId) {
+        return venueRepository.getPapersInVenueIsCitedTimes(venueId);
     }
 
 
