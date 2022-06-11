@@ -14,4 +14,8 @@ public interface VenueRepository extends Neo4jRepository<Venue, String> {
     //这个学术刊物/会议的所有文章的被引用次数之和
     @Query("match (v:VENUE{venueId:$venueId}) -[:PUBLISH]-> (p:PAPER) <-[:REFERENCE]- (p1:PAPER) return count(distinct p1)")
     int getPapersInVenueIsCitedTimes(String venueId);
+
+    //查找论文发表在哪些期刊
+    @Query("match (v:VENUE) -[:PUBLISH]-> (p:PAPER{paperId:$paperId}) return v")
+    Venue findVenueByPublishPaperId(String paperId);
 }

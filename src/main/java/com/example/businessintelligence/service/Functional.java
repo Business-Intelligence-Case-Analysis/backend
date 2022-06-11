@@ -5,7 +5,9 @@ import com.example.businessintelligence.dao.AffiliationRepository;
 import com.example.businessintelligence.dao.AuthorRepository;
 import com.example.businessintelligence.dao.PaperRepository;
 import com.example.businessintelligence.dao.VenueRepository;
+import com.example.businessintelligence.dao.mysqlDao.PaperRepositoryMysql;
 import com.example.businessintelligence.dto.*;
+import com.example.businessintelligence.entity.mysqlEntity.PaperMysql;
 import com.example.businessintelligence.entity.node.Affiliation;
 import com.example.businessintelligence.entity.node.Author;
 import com.example.businessintelligence.entity.node.Paper;
@@ -27,6 +29,8 @@ public class Functional {
     VenueRepository venueRepository;
     @Resource
     AffiliationRepository affiliationRepository;
+    @Resource
+    PaperRepositoryMysql paperRepositoryMysql;
 
     public List<Author> getAuthorsByName(String authorName) {
         return authorRepository.findAuthorByName(authorName);
@@ -190,7 +194,66 @@ public class Functional {
         }
         return authorDTOList;
     }
+    public List<PaperMysql> getPapersByPaperTitle(String paperTitle){
+        return paperRepositoryMysql.findPaperMysqlByTitle(paperTitle);
+    }
 
+    public PaperReferencesDTO getPaperAndReferences(String paperId){
+        PaperDTO paperDTO = getPaperDTO(paperId);
 
+        if (paperDTO == null)
+            return null;;
 
+        List<Paper> references = paperRepository.findPapersByReference(paperId);
+        List<PaperDTO> referencesDTO = new ArrayList<PaperDTO>();
+
+        // 遍历每一篇被引用的文章，封装成对应的DTO
+        for(Paper reference:references){
+            List<Author> reAuthors = authorRepository.findAuthorWritingPaper(reference.getPaperId());
+            ArrayList<AuthorDTO> reAuthorDTOS = new ArrayList<>();
+
+            for(Author reAuthor:reAuthors){
+                reAuthorDTOS.add(new AuthorDTO(reAuthor));
+            }
+
+            PaperDTO rePaper = new PaperDTO();
+            rePaper.setPaperAndAuthor(reference,reAuthorDTOS);
+
+            referencesDTO.add(rePaper);
+        }
+
+        return new PaperReferencesDTO(paperDTO, referencesDTO);
+    }
+
+    public PaperAndVenueDTO getPaperAndVenueByPaperId(String paperId){
+        PaperDTO paperDTO = getPaperDTO(paperId);
+
+        if (paperDTO == null)
+            return null;
+
+        Venue venue = venueRepository.findVenueByPublishPaperId(paperId);
+        VenueDTO venueDTO = new VenueDTO(venue.getVenueId());
+
+        return new PaperAndVenueDTO(paperDTO,venueDTO);
+    }
+
+    public PaperDTO getPaperDTO(String paperId){
+
+        PaperMysql paperMysql = paperRepositoryMysql.findPaperMysqlByPaperId(Integer.parseInt(paperId));
+
+        if (paperMysql == null){
+            System.out.println("this paperId is not right!");
+            return null;
+        }
+
+        List<Author> authors = authorRepository.findAuthorWritingPaper(paperId);
+        ArrayList<AuthorDTO> authorDTOS = new ArrayList<>();
+        // 封装到对应的作者的DTO
+        for(Author author : authors){
+            authorDTOS.add(new AuthorDTO(author));
+        }
+        PaperDTO paperDTO = new PaperDTO();
+        paperDTO.setPaperMysqlAndAuthor(paperMysql,authorDTOS);
+        return paperDTO;
+    }
 }

@@ -5,10 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.businessintelligence.dto.*;
 import com.example.businessintelligence.entity.logicalEntity.ApiResult;
 
+import com.example.businessintelligence.entity.mysqlEntity.PaperMysql;
 import com.example.businessintelligence.entity.node.Author;
 import com.example.businessintelligence.service.Functional;
 import com.example.businessintelligence.utils.ApiResultHandler;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -118,8 +120,39 @@ public class HomeController {
         return ApiResultHandler.success(authorDTOList);
     }
 
+    @PostMapping("/getPapersByPaperTitle")
+    public ApiResult getPapersByPaperTitle(@RequestBody JSONObject jsonObject){
+        String paperTitle = jsonObject.getString("title");
+        if (paperTitle == null || "".equals(paperTitle))
+            return ApiResultHandler.fail();
+        List<PaperMysql> papers = functional.getPapersByPaperTitle(paperTitle);
+        if (papers.size() ==0)
+            return ApiResultHandler.empty();
+        return ApiResultHandler.success(papers);
+    }
+
+    @GetMapping("/getPaperAndReferences")
+    public ApiResult getPaperAndReferences(@RequestParam(value = "paperId")String paperId) {
+        String id = StringUtils.trim(paperId);
+        if (id == null || "".equals(id))
+            return ApiResultHandler.fail();
+        return  ApiResultHandler.success(functional.getPaperAndReferences(id));
+    }
 
 
 
-
+    @GetMapping("/getPaperAndVenue")
+    public ApiResult getPaperAndVenue(@RequestParam(value = "paperId")String paperId){
+        String id = StringUtils.trim(paperId);
+        if (id == null || "".equals(id))
+            return ApiResultHandler.fail();
+        return ApiResultHandler.success(functional.getPaperAndVenueByPaperId(paperId));
+    }
+    @GetMapping("/getPaperAuthor")
+    public ApiResult getPaperAuthor(@RequestParam(value = "paperId")String paperId){
+        String id = StringUtils.trim(paperId);
+        if (id == null || "".equals(id))
+            return ApiResultHandler.fail();
+        return ApiResultHandler.success(functional.getPaperDTO(paperId));
+    }
 }
