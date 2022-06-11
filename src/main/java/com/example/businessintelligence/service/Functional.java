@@ -142,5 +142,17 @@ public class Functional {
         return authorAndAffiliationDTO;
     }
 
+    public List<PaperDTO> getPapersPublishedByVenueInYear(String venue, String year) {
+        List<Paper> papers = paperRepository.findPapersPublishedByVenueAndYear(venue, year);
+        List<PaperDTO> paperDTOList = new ArrayList<>();
+        for(Paper p : papers) {
+            PaperDTO paperDTO = new PaperDTO();
+            paperDTO.setPaper(p);
+            paperDTOList.add(paperDTO);
+        }
+        return paperDTOList;
+    }
+
+
 
 }

@@ -40,6 +40,14 @@ public class PaperDTO {
         this.author = authorDTOList;
     }
 
+    public void setPaper(Paper paper) {
+        this.id = Integer.parseInt(paper.getPaperId());
+        this.title = paper.getTitle();
+        this.year = paper.getYear();
+        this.Abstract = paper.getAbstract();
+        this.label = "paper";
+    }
+
 
 
 }

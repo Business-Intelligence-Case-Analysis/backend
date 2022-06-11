@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.businessintelligence.dto.AuthorAndAffiliationDTO;
 import com.example.businessintelligence.dto.AuthorAndCollaboratorDTO;
 import com.example.businessintelligence.dto.AuthorAndPaperDTO;
+import com.example.businessintelligence.dto.PaperDTO;
 import com.example.businessintelligence.entity.logicalEntity.ApiResult;
 
 import com.example.businessintelligence.entity.node.Author;
@@ -31,7 +32,6 @@ public class HomeController {
         }
         return ApiResultHandler.success(authorList);
     }
-
 
     @PostMapping("/getPapersAndVenues")
     public ApiResult getPapersAndVenues(@RequestBody JSONObject jsonObject) {
@@ -72,6 +72,19 @@ public class HomeController {
         }
         return ApiResultHandler.success(authorAndAffiliationDTO);
     }
+
+    @PostMapping("/getPapersPublishedByVenueInYear")
+    public ApiResult getPapersPublishedByVenueInYear(@RequestBody JSONObject jsonObject) {
+        String venue = jsonObject.getString("venue");
+        String year = jsonObject.getInteger("year").toString();
+        List<PaperDTO> paperDTOList =  functional.getPapersPublishedByVenueInYear(venue, year);
+        if(paperDTOList.size() == 0) {
+            return ApiResultHandler.empty();
+        }
+        return ApiResultHandler.success(paperDTOList);
+
+    }
+
 
     @GetMapping("/3")
     public ApiResult getVenuesPublishPaper(@RequestParam("paperId") int paperId) {
