@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 @Entity
 @IdClass(CoAutorPk.class)
-@Table(name = "coAuthor",schema = "business")
+@Table(name = "co_author",schema = "business")
 public class CoAuthorMysql {
     private int authorId1;
     private int authorId2;

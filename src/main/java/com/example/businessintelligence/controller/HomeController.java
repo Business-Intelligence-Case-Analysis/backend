@@ -155,4 +155,13 @@ public class HomeController {
             return ApiResultHandler.fail();
         return ApiResultHandler.success(functional.getPaperDTO(paperId));
     }
+
+    @PostMapping("/getInfluentialAuthors")
+    public ApiResult getInfluentialAuthors(@RequestBody JSONObject jsonObject){
+        String interest = jsonObject.getString("interest").trim();
+        String indicator = jsonObject.getString("type").trim();
+        if(interest == null || interest.equals("") || indicator == null || indicator.equals(""))
+            return null;
+        else return ApiResultHandler.success(functional.getInfluentialAuthors(interest,indicator));
+    }
 }

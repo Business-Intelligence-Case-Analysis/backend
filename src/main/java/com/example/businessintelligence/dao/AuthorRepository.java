@@ -41,7 +41,7 @@ public interface AuthorRepository extends Neo4jRepository<Author, Integer> {
     @Query("match (a:AUTHOR) -[:IN]-> (aff:AFFILIATION{affiliationId:$affiliationId}) return a")
     List<Author> findAuthorByAffiliation(String affiliationId);
 
-    //查询某一兴趣（领域）下的所有作者
+    //查询某一个兴趣（领域）下的所有作者
     @Query("match (a:AUTHOR) -[:HAS_INTEREST]-> (i:INTEREST{interestId:$interestId}) return a")
     List<Author> findAuthorsByInterest(String interestId);
 
