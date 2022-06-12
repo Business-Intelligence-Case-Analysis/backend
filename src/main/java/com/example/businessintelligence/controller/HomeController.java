@@ -131,35 +131,33 @@ public class HomeController {
         return ApiResultHandler.success(papers);
     }
 
-    @GetMapping("/getPaperAndReferences")
-    public ApiResult getPaperAndReferences(@RequestParam(value = "paperId")String paperId) {
-        String id = StringUtils.trim(paperId);
+    @PostMapping("/getPaperAndReferences")
+    public ApiResult getPaperAndReferences(@RequestBody JSONObject jsonObject) {
+        String id = StringUtils.trim(jsonObject.getString("paperId"));
         if (id == null || "".equals(id))
             return ApiResultHandler.fail();
         return  ApiResultHandler.success(functional.getPaperAndReferences(id));
     }
 
-
-
-    @GetMapping("/getPaperAndVenue")
-    public ApiResult getPaperAndVenue(@RequestParam(value = "paperId")String paperId){
-        String id = StringUtils.trim(paperId);
+    @PostMapping("/getPaperAndVenue")
+    public ApiResult getPaperAndVenue(@RequestBody JSONObject jsonObject){
+        String id = StringUtils.trim(jsonObject.getString("paperId"));
         if (id == null || "".equals(id))
             return ApiResultHandler.fail();
-        return ApiResultHandler.success(functional.getPaperAndVenueByPaperId(paperId));
+        return ApiResultHandler.success(functional.getPaperAndVenueByPaperId(id));
     }
-    @GetMapping("/getPaperAuthor")
-    public ApiResult getPaperAuthor(@RequestParam(value = "paperId")String paperId){
-        String id = StringUtils.trim(paperId);
+    @PostMapping("/getPaperAuthor")
+    public ApiResult getPaperAuthor(@RequestBody JSONObject jsonObject){
+        String id = StringUtils.trim(jsonObject.getString("paperId"));
         if (id == null || "".equals(id))
             return ApiResultHandler.fail();
-        return ApiResultHandler.success(functional.getPaperDTO(paperId));
+        return ApiResultHandler.success(functional.getPaperDTO(id));
     }
 
     @PostMapping("/getInfluentialAuthors")
     public ApiResult getInfluentialAuthors(@RequestBody JSONObject jsonObject){
-        String interest = jsonObject.getString("interest").trim();
-        String indicator = jsonObject.getString("type").trim();
+        String interest = StringUtils.trim(jsonObject.getString("interest"));
+        String indicator = StringUtils.trim(jsonObject.getString("type"));
         if(interest == null || interest.equals("") || indicator == null || indicator.equals(""))
             return null;
         else return ApiResultHandler.success(functional.getInfluentialAuthors(interest,indicator));
