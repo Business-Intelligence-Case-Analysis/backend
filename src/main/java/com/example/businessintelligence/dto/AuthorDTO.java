@@ -22,6 +22,20 @@ public class AuthorDTO {
 
     private String label;
 
+    public AuthorDTO() {
+    }
+
+    public AuthorDTO(int id, String name, double cn, double hi, double pc, double pi, double upi, String label) {
+        this.id = id;
+        this.name = name;
+        this.cn = cn;
+        this.hi = hi;
+        this.pc = pc;
+        this.pi = pi;
+        this.upi = upi;
+        this.label = label;
+    }
+
     public AuthorDTO(Author author) {
         System.out.println(author);
         this.id = Integer.parseInt(author.getAuthorId());

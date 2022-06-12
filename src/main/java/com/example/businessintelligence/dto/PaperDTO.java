@@ -5,6 +5,7 @@ import com.example.businessintelligence.entity.mysqlEntity.PaperMysql;
 import com.example.businessintelligence.entity.node.Paper;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,9 +20,22 @@ public class PaperDTO {
 
     String label;
 
-    List<PeriodicalDTO> periodical;
+    List<PeriodicalDTO> periodical=new ArrayList<>();
 
-    List<AuthorDTO> author;
+    List<AuthorDTO> author= new ArrayList<>();
+
+    public PaperDTO() {
+    }
+
+    public PaperDTO(int id, String title, String year, String anAbstract, String label, List<PeriodicalDTO> periodical, List<AuthorDTO> author) {
+        this.id = id;
+        this.title = title;
+        this.year = year;
+        Abstract = anAbstract;
+        this.label = label;
+        this.periodical = periodical;
+        this.author = author;
+    }
 
     public void setPaperAndPeriodical(Paper paper, List<PeriodicalDTO> periodicalDTOList) {
         this.id = Integer.parseInt(paper.getPaperId());

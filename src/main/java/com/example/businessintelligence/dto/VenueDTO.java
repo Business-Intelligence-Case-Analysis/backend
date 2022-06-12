@@ -15,6 +15,9 @@ public class VenueDTO {
     private String title;
     private final String label="venue";
 
+    public VenueDTO() {
+    }
+
     public VenueDTO(String title) {
         this.id = title;
         this.title = title;

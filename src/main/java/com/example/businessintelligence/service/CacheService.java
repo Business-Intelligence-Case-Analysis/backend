@@ -44,8 +44,9 @@ public class CacheService {
         try{
             String str_key = String.valueOf(key);
             if(value!=null){
+                String stringValue = JSON.toJSONString(value);
                 redisTemplate.opsForValue()
-                        .set(str_key, JSON.toJSONString(value),time_out,unit);
+                        .set(str_key, stringValue,time_out,unit);
             }
         }catch (Exception e){
             log.error(e.getMessage(),e);
@@ -95,7 +96,8 @@ public class CacheService {
         try{
             String str_key = String.valueOf(key);
             if(value!=null){
-                redisTemplate.opsForList().rightPush(str_key,JSON.toJSONString(value));
+                String stringList = JSON.toJSONString(value);
+                redisTemplate.opsForList().rightPush(str_key,stringList);
                 redisTemplate.expire(str_key,time_out,unit);
             }
         }catch (Exception e){
@@ -119,18 +121,23 @@ public class CacheService {
         String value = this.get(key);
         V result = null;
         if(!StringUtils.isEmpty(value)){
-            result = JSONObject.parseObject(value,clazz);
+            result = JSON.parseObject(value,clazz);
         }
         return result;
     }
 
     public <K,V> List<V> getList(K key,Class<V> clazz){
-        String value = this.get(key);
-        List<V> result = Collections.emptyList();
-        if(!StringUtils.isEmpty(value)){
-            result=JSON.parseArray(value,clazz);
+        if(key instanceof String){
+            String stringKey = (String) key;
+            String value = redisTemplate.opsForList().index(stringKey,-1);
+            List<V> result = Collections.emptyList();
+            if(!StringUtils.isEmpty(value)){
+                result=JSON.parseArray(value,clazz);
+            }
+            return result;
+        }else{
+            throw new RuntimeException("key type is not string");
         }
-        return result;
     }
 
     public <K,SK,V> V getHashValue(K key,SK sub_key,Class<V> clazz){

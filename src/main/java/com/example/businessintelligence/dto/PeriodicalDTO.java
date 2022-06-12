@@ -10,6 +10,14 @@ public class PeriodicalDTO {
 
     String label;
 
+    public PeriodicalDTO() {
+    }
+
+    public PeriodicalDTO(String name, String label) {
+        this.name = name;
+        this.label = label;
+    }
+
     public PeriodicalDTO(Venue venue) {
         this.name = venue.getVenueId();
         this.label = "periodical";
