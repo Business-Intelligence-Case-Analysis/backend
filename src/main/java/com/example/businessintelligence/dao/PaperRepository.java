@@ -1,5 +1,6 @@
 package com.example.businessintelligence.dao;
 
+import com.example.businessintelligence.entity.node.Author;
 import com.example.businessintelligence.entity.node.Paper;
 
 import org.springframework.data.neo4j.annotation.Query;
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface PaperRepository extends Neo4jRepository<Paper, Integer> {
+public interface PaperRepository extends Neo4jRepository<Paper, Long> {
+
+    @Query("match (p:PAPER{paperId:paperId}) return p")
+    Paper get(String paperId);
 
     //根据名字查询作者写过哪些文章
     @Query("match (a:AUTHOR{name:$authorName}) -[:WRITE]-> (p:PAPER) return p")

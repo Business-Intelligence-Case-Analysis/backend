@@ -1,10 +1,13 @@
 package com.example.businessintelligence.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.businessintelligence.dto.*;
 import com.example.businessintelligence.entity.logicalEntity.ApiResult;
 
+import com.example.businessintelligence.entity.logicalEntity.BaseNode;
+import com.example.businessintelligence.entity.logicalEntity.BaseRelation;
 import com.example.businessintelligence.entity.node.Author;
 import com.example.businessintelligence.service.Functional;
 import com.example.businessintelligence.utils.ApiResultHandler;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -118,8 +122,27 @@ public class HomeController {
         return ApiResultHandler.success(authorDTOList);
     }
 
+    @PostMapping("/getAllLinkedByAuthor")
+    public ApiResult getAllLinkedByAuthor(@RequestBody JSONObject jsonObject) {
+        String authorId = jsonObject.getInteger("authorId").toString();
+        List<BaseNode> baseNodeList = functional.findAllByAuthor(authorId);
+        return ApiResultHandler.success(baseNodeList);
+    }
 
+    @PostMapping("/getMultihopBetweenNodes")
+    public ApiResult getMultihopBetweenNodes(@RequestBody JSONObject jsonObject) {
+        JSONObject entity1 = jsonObject.getJSONObject("entity1");
+        String label1 = entity1.getString("label");
+        String nodeId1 = entity1.getString(label1 + "Id");
 
+        JSONObject entity2 = jsonObject.getJSONObject("entity2");
+        String label2 = entity2.getString("label");
+        String nodeId2 = entity2.getString(label2 + "Id");
 
+        Long uid1 = functional.getUid(nodeId1, label1);
+        Long uid2 = functional.getUid(nodeId2, label2);
+
+        return ApiResultHandler.success(functional.MultihopBetweenNodes(uid1, uid2, 2));
+    }
 
 }

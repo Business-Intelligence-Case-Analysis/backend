@@ -1,18 +1,18 @@
 package com.example.businessintelligence.dao;
 
-import com.example.businessintelligence.dto.AuthorDTO;
+import com.example.businessintelligence.entity.logicalEntity.BaseNode;
 import com.example.businessintelligence.entity.node.Author;
-import com.example.businessintelligence.entity.node.Paper;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface AuthorRepository extends Neo4jRepository<Author, Integer> {
+public interface AuthorRepository extends Neo4jRepository<Author, Long> {
 
     //根据id找作者
-    Author findAuthorByAuthorId(String id);
+    @Query("match (a:AUTHOR{authorId:$authorId}) return a")
+    Author get(String authorId);
 
     //根据名字查询作者节点（可能同名）
     List<Author> findAuthorByName(String authorName);
@@ -44,5 +44,6 @@ public interface AuthorRepository extends Neo4jRepository<Author, Integer> {
     //查询某一兴趣（领域）下的所有作者
     @Query("match (a:AUTHOR) -[:HAS_INTEREST]-> (i:INTEREST{interestId:$interestId}) return a")
     List<Author> findAuthorsByInterest(String interestId);
+
 
 }
