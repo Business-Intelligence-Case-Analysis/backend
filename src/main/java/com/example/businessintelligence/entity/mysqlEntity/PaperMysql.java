@@ -23,7 +23,7 @@ public class PaperMysql {
     private String paperAbstract;
 
     @Id
-    @Column(name = "paperId")
+    @Column(name = "paper_id")
     public int getPaperId() {
         return paperId;
     }

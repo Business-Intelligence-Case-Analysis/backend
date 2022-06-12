@@ -21,7 +21,7 @@ public interface PaperRepositoryMysql extends JpaRepository<PaperMysql, Integer>
     // 查询同名论文
     List<PaperMysql> findPaperMysqlByTitle(String title);
 
-    @Query(value = "select * from paper where paperId=?1",nativeQuery = true)
+    @Query(value = "select * from paper where paper_id=?1",nativeQuery = true)
     PaperMysql findPaperMysqlByPaperId(int id);
 
 }
