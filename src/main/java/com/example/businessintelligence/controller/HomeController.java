@@ -5,13 +5,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.businessintelligence.dto.*;
 import com.example.businessintelligence.entity.logicalEntity.ApiResult;
-
 import com.example.businessintelligence.entity.logicalEntity.BaseNode;
 import com.example.businessintelligence.entity.logicalEntity.BaseRelation;
+import com.example.businessintelligence.entity.mysqlEntity.PaperMysql;
 import com.example.businessintelligence.entity.node.Author;
 import com.example.businessintelligence.service.Functional;
 import com.example.businessintelligence.utils.ApiResultHandler;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -145,4 +146,46 @@ public class HomeController {
         return ApiResultHandler.success(functional.MultihopBetweenNodes(uid1, uid2, 2));
     }
 
+    @PostMapping("/getPapersByPaperTitle")
+    public ApiResult getPapersByPaperTitle(@RequestBody JSONObject jsonObject){
+        String paperTitle = jsonObject.getString("title");
+        if (paperTitle == null || "".equals(paperTitle))
+            return ApiResultHandler.fail();
+        List<PaperMysql> papers = functional.getPapersByPaperTitle(paperTitle);
+        if (papers.size() ==0)
+            return ApiResultHandler.empty();
+        return ApiResultHandler.success(papers);
+    }
+
+    @PostMapping("/getPaperAndReferences")
+    public ApiResult getPaperAndReferences(@RequestBody JSONObject jsonObject) {
+        String id = StringUtils.trim(jsonObject.getString("paperId"));
+        if (id == null || "".equals(id))
+            return ApiResultHandler.fail();
+        return  ApiResultHandler.success(functional.getPaperAndReferences(id));
+    }
+
+    @PostMapping("/getPaperAndVenue")
+    public ApiResult getPaperAndVenue(@RequestBody JSONObject jsonObject){
+        String id = StringUtils.trim(jsonObject.getString("paperId"));
+        if (id == null || "".equals(id))
+            return ApiResultHandler.fail();
+        return ApiResultHandler.success(functional.getPaperAndVenueByPaperId(id));
+    }
+    @PostMapping("/getPaperAuthor")
+    public ApiResult getPaperAuthor(@RequestBody JSONObject jsonObject){
+        String id = StringUtils.trim(jsonObject.getString("paperId"));
+        if (id == null || "".equals(id))
+            return ApiResultHandler.fail();
+        return ApiResultHandler.success(functional.getPaperDTO(id));
+    }
+
+    @PostMapping("/getInfluentialAuthors")
+    public ApiResult getInfluentialAuthors(@RequestBody JSONObject jsonObject){
+        String interest = StringUtils.trim(jsonObject.getString("interest"));
+        String indicator = StringUtils.trim(jsonObject.getString("type"));
+        if(interest == null || interest.equals("") || indicator == null || indicator.equals(""))
+            return null;
+        else return ApiResultHandler.success(functional.getInfluentialAuthors(interest,indicator));
+    }
 }

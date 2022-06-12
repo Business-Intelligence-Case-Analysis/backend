@@ -1,6 +1,7 @@
 package com.example.businessintelligence.dto;
 
 
+import com.example.businessintelligence.entity.mysqlEntity.PaperMysql;
 import com.example.businessintelligence.entity.node.Paper;
 import lombok.Data;
 
@@ -48,6 +49,20 @@ public class PaperDTO {
         this.label = "paper";
     }
 
+    public void setPaperMysql(PaperMysql paper) {
+        this.id = Integer.parseInt(String.valueOf(paper.getPaperId()));
+        this.title = paper.getTitle();
+        this.year = String.valueOf(paper.getYear());
+        this.Abstract = paper.getPaperAbstract();
+        this.label = "paper";
+    }
 
-
+    public void setPaperMysqlAndAuthor(PaperMysql paper, List<AuthorDTO> authorDTOList) {
+        this.id = Integer.parseInt(String.valueOf(paper.getPaperId()));
+        this.title = paper.getTitle();
+        this.year = String.valueOf(paper.getYear());
+        this.Abstract = paper.getPaperAbstract();
+        this.label = "paper";
+        this.author = authorDTOList;
+    }
 }

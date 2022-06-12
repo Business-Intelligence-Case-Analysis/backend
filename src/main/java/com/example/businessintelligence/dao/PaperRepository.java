@@ -34,4 +34,9 @@ public interface PaperRepository extends Neo4jRepository<Paper, Long> {
     //计算该文章的被引用次数
     @Query("match (p:PAPER{paperId:$paperId}) <-[:REFERENCE]- (p1:PAPER) return count(distinct p1)")
     int getPaperIdCitedTimes(String paperId);
+
+    //根据论文的id查询它引用过的论文
+    @Query("match r=(p1:PAPER{paperId:$paperId}) -[:REFERENCE]-> (p2:PAPER) return p2")
+    List<Paper> findPapersByReference(String paperId);
+
 }

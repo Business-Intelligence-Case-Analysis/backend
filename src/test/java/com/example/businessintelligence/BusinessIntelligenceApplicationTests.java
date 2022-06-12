@@ -7,10 +7,11 @@ import com.example.businessintelligence.entity.logicalEntity.BaseNode;
 import com.example.businessintelligence.entity.logicalEntity.BaseRelation;
 import com.example.businessintelligence.entity.node.Paper;
 import org.junit.jupiter.api.Test;
-
-
+import com.example.businessintelligence.dao.mysqlDao.PaperRepositoryMysql;
+import com.example.businessintelligence.entity.mysqlEntity.PaperMysql;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -35,4 +36,13 @@ class BusinessIntelligenceApplicationTests {
         List<Paper> papers = paperRepository.findPapersPublishedByVenueAndYear("Information and Control", "1984");
     }
 
+
+    @Autowired
+    PaperRepositoryMysql paperRepositoryMysql;
+
+    @Test
+    void f(){
+        PaperMysql p = paperRepositoryMysql.findPaperMysqlByPaperId(47);
+        System.out.println(p == null);
+    }
 }
