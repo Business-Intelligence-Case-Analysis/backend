@@ -195,6 +195,7 @@ public class HomeController {
 
     @PostMapping("/getMultihopBetweenNodes")
     public ApiResult getMultihopBetweenNodes(@RequestBody JSONObject jsonObject) {
+        int hops = jsonObject.getInteger("hopCount");
         JSONObject entity1 = jsonObject.getJSONObject("entity1");
         String label1 = entity1.getString("label");
         String nodeId1 = entity1.getString(label1 + "Id");
@@ -206,7 +207,7 @@ public class HomeController {
         Long uid1 = functional.getUid(nodeId1, label1);
         Long uid2 = functional.getUid(nodeId2, label2);
 
-        return ApiResultHandler.success(functional.MultihopBetweenNodes(uid1, uid2, 2));
+        return ApiResultHandler.success(functional.MultihopBetweenNodes(uid1, uid2, hops));
     }
 
     @PostMapping("/getPapersByPaperTitle")

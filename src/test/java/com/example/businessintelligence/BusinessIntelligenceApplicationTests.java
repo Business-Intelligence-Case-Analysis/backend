@@ -13,7 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class BusinessIntelligenceApplicationTests {
@@ -26,9 +28,10 @@ class BusinessIntelligenceApplicationTests {
     PaperRepository paperRepository;
     @Test
     void contextLoads() {
-//        List<BaseNode> b = baseRelationRepository.get("AUTHOR");
-//        List<BaseRelation> b = baseRelationRepository.getMultihopBetweenNodes(158589L,1140812L,2);
-//        System.out.println(b);
+
+//        List<BaseRelation> baseRelations = baseRelationRepository.test(5958579L, 1489531L,2);
+//        System.out.println(baseRelations.size());
+//        System.out.println(baseRelations);
     }
 
     @Test

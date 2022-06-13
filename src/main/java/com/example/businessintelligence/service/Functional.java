@@ -320,7 +320,7 @@ public class Functional {
     }
 
     public MultihopDTO MultihopBetweenNodes(Long uid1, Long uid2, int hopCount) {
-        List<BaseRelation> baseRelations =  baseRelationRepository.getMultihopBetweenNodes(uid1, uid2);
+        List<BaseRelation> baseRelations =  baseRelationRepository.getMultihopBetweenNodes(uid1, uid2, hopCount);
         HashSet<BaseNodeDTO> baseNodeDTOHashSet = new HashSet<>(); //使用哈希集合，用于节点去重
         List<BaseRelationDTO> baseRelationDTOList = new ArrayList<>();
         for(BaseRelation baseRelation : baseRelations) {
