@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface PaperRepository extends Neo4jRepository<Paper, Long> {
 
-    @Query("match (p:PAPER{paperId:paperId}) return p")
+    @Query("match (p:PAPER{paperId:$paperId}) return p")
     Paper get(String paperId);
 
     //根据名字查询作者写过哪些文章

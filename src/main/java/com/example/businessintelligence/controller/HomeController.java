@@ -1,7 +1,7 @@
 package com.example.businessintelligence.controller;
 
 
-import com.alibaba.fastjson.JSON;
+
 import com.alibaba.fastjson.JSONObject;
 import com.example.businessintelligence.dto.*;
 import com.example.businessintelligence.entity.logicalEntity.ApiResult;
@@ -206,6 +206,10 @@ public class HomeController {
 
         Long uid1 = functional.getUid(nodeId1, label1);
         Long uid2 = functional.getUid(nodeId2, label2);
+
+        if(uid1 == 0 || uid2 == 0) {
+            return ApiResultHandler.empty();
+        }
 
         return ApiResultHandler.success(functional.MultihopBetweenNodes(uid1, uid2, hops));
     }
